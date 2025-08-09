@@ -1,3 +1,27 @@
+.exercise-card:link,
+.exercise-card:visited,
+.exercise-card:hover,
+.exercise-card:active {
+  text-decoration: none !important;
+  color: inherit;
+}
+/* Limit scroll menu container to visible area */
+.react-horizontal-scrolling-menu--scroll-container {
+  max-width: 100vw !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+/* Force horizontal layout for scroll menu items */
+.react-horizontal-scrolling-menu--item {
+  display: inline-block !important;
+  vertical-align: top !important;
+}
+/* Force ScrollMenu wrapper to not wrap children */
+.scrollmenu-nowrap {
+  display: flex !important;
+  flex-direction: row !important;
+  white-space: nowrap !important;
+}
 body {
   font-family: 'Josefin Sans';
   background-color: #FFFAFB;
@@ -42,11 +66,7 @@ body {
   transform: scale(1.3, 1.3);
 }
 
-.react-horizontal-scrolling-menu--wrapper {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
+
 
 .detail-image {
   width: 729px;
@@ -63,20 +83,7 @@ body {
 
 }
 
-.exercise-card {
-  width: 400px;
-  height: 445px;
-  background: #fff;
-  border-top: 4px solid #FF2625;
-  border-bottom-left-radius: 20px;
-  text-decoration: none;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding-bottom: 10px;
-  transform: scale(1, 1);
-  transition: 0.3s all ease-in-out;
-}
+
 
 .exercise-card img {
   height: 326px;
@@ -113,9 +120,7 @@ body {
   }
 
 
-  .react-horizontal-scrolling-menu--scroll-container {
-    width: 500px;
-  }
+
 
   .left-arrow,
   .right-arrow {
