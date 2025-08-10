@@ -3,7 +3,16 @@ import { Typography, Box, Stack } from '@mui/material';
 import Loader from './Loader';
 
 const ExerciseVideos = ({ exerciseVideos, name }) => {
-  if (!exerciseVideos || !exerciseVideos.length) return <Loader />;
+  if (!exerciseVideos) return <Loader />;
+  if (exerciseVideos.length === 0) {
+    return (
+      <Box sx={{ marginTop: { lg: '203px', xs: '20px' } }} p="20px">
+        <Typography sx={{ fontSize: { lg: '28px', xs: '18px' } }} color="#000">
+          No videos found. Please try again later.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ marginTop: { lg: '203px', xs: '20px' } }} p="20px">
@@ -14,18 +23,32 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
             textTransform: 'capitalize' }}>
                 {name}</span> exercise videos
       </Typography>
-      <Stack sx={{ flexDirection: { lg: 'row' }, gap: { lg: '110px', xs: '0px' } }}
-       justifyContent="flex-start" flexWrap="wrap" alignItems="center">
-        {exerciseVideos?.slice(0, 3)?.map((item, index) => (
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+          gridTemplateRows: 'repeat(2, auto)',
+          gridAutoFlow: 'column',
+          columnGap: { xs: '16px', sm: '24px', lg: '40px' },
+          rowGap: { xs: '16px', sm: '24px', lg: '40px' },
+          alignItems: 'start',
+          justifyItems: 'stretch',
+        }}
+      >
+        {exerciseVideos?.slice(0, 6)?.map((item, index) => (
           <a
             key={index}
             className="exercise-video"
             href={`https://www.youtube.com/watch?v=${item.video.videoId}`}
             target="_blank"
             rel="noreferrer"
+            style={{ width: '100%', height: '100%' }}
           >
-            <img style={{ borderTopLeftRadius: '20px' }} 
-            src={item.video.thumbnails[0].url} alt={item.video.title} />
+            <img
+              style={{ width: '100%', height: 'auto', borderTopLeftRadius: '20px' }}
+              src={item.video.thumbnails[0].url}
+              alt={item.video.title}
+            />
             <Box>
               <Typography sx={{ fontSize: { lg: '28px', xs: '18px' } }} 
               fontWeight={600} color="#000">
@@ -37,7 +60,7 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
             </Box>
           </a>
         ))}
-      </Stack>
+      </Box>
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from '@mui/material/Pagination';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, Grid } from '@mui/material';
 
 import { exerciseOptions, fetchData } from '../Utils/fetchData';
 import ExerciseCard from './ExerciseCard';
@@ -12,15 +12,25 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   useEffect(() => {
     const fetchExercisesData = async () => {
-      let exercisesData = [];
+      try {
+        let exercisesData = [];
 
-      if (bodyPart === 'all') {
-        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
-      } else {
-        exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
+        if (bodyPart === 'all') {
+          exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+        } else {
+          exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
+        }
+
+        setExercises(exercisesData || []);
+        try {
+          if (Array.isArray(exercisesData) && exercisesData.length > 0) {
+            console.log('[debug] sample list gifUrl:', exercisesData[0]?.gifUrl);
+          }
+        } catch {}
+      } catch (err) {
+        console.error('Failed to load exercises:', err);
+        setExercises([]);
       }
-
-      setExercises(exercisesData);
     };
 
     fetchExercisesData();
@@ -40,26 +50,19 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   if (!currentExercises.length) return <Loader />;
 
   return (
-    <div id="exercises" style={{ marginTop: 50, padding: 20 }}>
-      <Typography variant="h4" fontWeight="bold" style={{ fontSize: 44, marginBottom: 46 }}>Showing Results</Typography>
-      <div style={{ width: '100vw', overflowX: 'auto', position: 'relative', padding: 0, margin: 0 }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            minWidth: 'max-content',
-            whiteSpace: 'nowrap',
-            paddingBottom: 16,
-          }}
-        >
-          {currentExercises.map((exercise, idx) => (
-            <span key={idx} style={{ display: 'inline-block', marginRight: 32 }}>
-              <ExerciseCard exercise={exercise} />
-            </span>
-          ))}
-        </div>
-      </div>
-      <div style={{ marginTop: 70, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {exercises.length > 9 && (
+    <Box id="exercises" sx={{ mt: 6, px: { xs: 2, sm: 3, md: 4 } }}>
+      <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: 44, xs: 32 }, mb: 5 }}>
+        Showing Results
+      </Typography>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} alignItems="stretch">
+        {currentExercises.map((exercise, idx) => (
+          <Grid item key={idx} xs={12} sm={6} md={4} sx={{ display: 'flex' }}>
+            <ExerciseCard exercise={exercise} />
+          </Grid>
+        ))}
+      </Grid>
+      <Box sx={{ mt: 9, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {exercises.length > exercisesPerPage && (
           <Pagination
             color="standard"
             shape="rounded"
@@ -70,8 +73,8 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
             size="large"
           />
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
