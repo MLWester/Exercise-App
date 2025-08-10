@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+## Exercise App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive React app to discover exercises, view details, and watch related videos.
 
-## Available Scripts
+### Features
+- Search exercises by name, muscle, equipment, or body part
+- Filter by body part with a drag-to-pan horizontal selector
+- Exercise list with responsive grid and pagination
+- Detail page with description, key info, and top YouTube videos
+- Similar exercises by target muscle and by equipment
 
-In the project directory, you can run:
+### Tech Stack
+- React 18, React Router 6, Material UI
+- RapidAPI: ExerciseDB and YouTube Search & Download
 
-### `npm start`
+### Getting Started
+1) Install dependencies
+```
+npm install
+```
+2) Create `.env` in the project root with your RapidAPI keys
+```
+REACT_APP_RAPID_API_KEY=your_exercisedb_rapidapi_key
+REACT_APP_YOUTUBE_API_KEY=your_youtube_search_rapidapi_key
+```
+3) Run the app
+```
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Scripts
+- `npm start`: run dev server
+- `npm run build`: production build
+- `npm test`: run tests
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Project Structure
+```
+src/
+  Components/
+    BodyPart.js           # Body-part selector card
+    Detail.js             # Exercise detail header (uses YouTube thumbnail)
+    ExerciseCard.js       # Exercise card (uses YouTube thumbnail)
+    Exercises.js          # Grid + pagination
+    ExerciseVideos.js     # Top YouTube videos
+    HorizontalScrollBar.js# Drag-to-pan horizontal list
+    Navbar.js, Footer.js
+  Pages/
+    Home.js               # Search + list
+    ExerciseDetail.js     # Detail + videos + similar
+  Utils/
+    fetchData.js          # API helpers (ExerciseDB & YouTube)
+```
 
-### `npm test`
+### Environment Variables
+- `REACT_APP_RAPID_API_KEY`: used for ExerciseDB requests
+- `REACT_APP_YOUTUBE_API_KEY`: used for YouTube search (RapidAPI). If only one key is available, set both to the same value.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Notes
+- ExerciseDB detail responses may not include `gifUrl`. This app uses YouTube thumbnails for imagery and falls back gracefully if none found.
+- If search shows no results, verify your RapidAPI keys/subscriptions and check the browser console for request errors.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### License
+MIT
